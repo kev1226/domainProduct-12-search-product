@@ -2,6 +2,7 @@ package com.tecnoshop.searchProducts.controller;
 
 import com.tecnoshop.searchProducts.model.Product;
 import com.tecnoshop.searchProducts.service.ProductService;
+import com.tecnoshop.searchProducts.dto.ErrorMessage;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,15 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getById(@PathVariable Long id) {
-        return service.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Product product = service.getById(id).orElse(null);
+
+        if (product == null) {
+            return ResponseEntity.status(404)
+                    .body(new ErrorMessage("Producto no encontrado"));
+        }
+
+        return ResponseEntity.ok(product);
     }
 
 }

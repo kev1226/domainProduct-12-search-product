@@ -1,4 +1,4 @@
-package com.tecnoshop.products;
+package com.tecnoshop.searchProducts;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
